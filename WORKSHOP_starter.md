@@ -43,7 +43,7 @@ Dans l'éditeur, un seul fichier Javascript avec **3 fonctions** :
 Écrit bien ton code à **l'intérieur** des accolades `{}` de ces **3 fonctions**
 
 ### Panneau Code
-Modifie `ghost_ai_build.js` dans le panneau **Code**, puis clique **Démarrer** pour charger et tester ton programme.
+Modifie l'IA du fantôme dans le panneau **Code**, puis clique **Démarrer** pour charger et tester ton programme.
 
 ### Panneau Jeu
 Clique le panneau **Jeu**, puis **Démarrer**, et utilise les **flèches** du clavier pour diriger Pac-Man.
@@ -60,20 +60,18 @@ Lorsque tu cliques dans **l'éditeur** ou dans la **zone de jeu**, une bordure <
 4. Joue avec les **flèches** du clavier
 
 ### À toi de jouer
-Pour cette étape, pas de code à écrire. Lis cette étape en entier.
+Pour cette étape, pas de code à écrire. Lis cette étape en entier et passe à l'étape suivante.
 
 ### Comment tester
 Clique le panneau **Jeu**, puis **Démarrer**, puis les flèches. Pac-Man bouge, le fantôme reste immobile : **c'est normal**, tu n'as pas encore codé de règle pour ton IA de fantôme.
 
-### Réflexion
-Pourquoi le contour <span style="color: #fc0">jaune</span> est-il important quand tu alternes entre l'éditeur et le jeu ?
 
 ---
 
 ## Étape 2 - Les coordonnées sur la grille
 
 ### Concept
-En informatique et en graphisme, une carte de jeu est une **grille de cases**. Chaque case a une coordonnée `(gridX, gridY)` :
+La zone de jeu est une **grille de cases**. Chaque case a une coordonnée `(gridX, gridY)` :
 
 - `gridX` = numéro de **colonne** - 0 tout à gauche, augmente vers la **droite**
 - `gridY` = numéro de **ligne** - 0 tout en haut, augmente vers le **bas**
@@ -86,10 +84,8 @@ Dans ton code, le jeu te donne déjà ces valeurs :
 - `map.isWall(x, y)` - `true` si la case `(x, y)` est un mur (case bleu), `false` sinon
 
 ### À toi de jouer
-Pas de code à écrire - lis le concept. Quand c'est clair, passe à l'étape suivante.
+Pas de code à écrire - lis bien cette érape. Quand c'est clair, passe à l'étape suivante.
 
-### Comment tester
-Aucun test de code requis pour cette étape.
 
 ### Vérifie
 Tu sais lire `ghost.gridX`, `pacman.gridY` et comprendre `map.isWall(x, y)`.
