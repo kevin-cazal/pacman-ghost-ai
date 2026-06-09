@@ -148,17 +148,6 @@ async function boot() {
 
   document.title = 'Mini Pac-Man — Atelier (infos à coder)';
 
-  const helpBody = document.querySelector('.workshop-help-body');
-  if (helpBody) {
-    helpBody.innerHTML = await stepsModule.loadAide();
-  }
-
-  const hints = await stepsModule.loadUiHints();
-  const codeHint = document.querySelector('.pane-hint');
-  const gameHint = document.querySelector('.pane-hint-game');
-  if (codeHint && hints.code) codeHint.innerHTML = hints.code;
-  if (gameHint && hints.game) gameHint.innerHTML = hints.game;
-
   renderInstructions();
   setFocus('editor');
   syncGameControls();

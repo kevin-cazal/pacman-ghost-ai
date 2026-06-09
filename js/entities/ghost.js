@@ -1,6 +1,6 @@
 // NE PAS MODIFIER — code de base de l'atelier
 
-import { TILE_SIZE, SPEEDS, DIRECTIONS } from '../config.js';
+import { TILE_SIZE, SPEEDS, DIRECTIONS, PATROL_LOCK_DURATION } from '../config.js';
 
 let chooseDirection = () => null;
 let updateState = () => 'patrol';
@@ -54,6 +54,7 @@ export class Ghost {
     this.pixelY = startY * TILE_SIZE;
     this.direction = null;
     this.state = 'patrol';
+    this.patrolLockTimer = 0;
     this.speed = SPEEDS.ghost * TILE_SIZE;
   }
 
@@ -83,6 +84,7 @@ export class Ghost {
       gridY: this.gridY,
       direction: this.direction,
       state: this.state,
+      patrolLockTimer: this.patrolLockTimer,
     };
   }
 
@@ -96,6 +98,7 @@ export class Ghost {
       distanceY: pacman.gridY - this.gridY,
       totalDistance: Math.abs(pacman.gridX - this.gridX) + Math.abs(pacman.gridY - this.gridY),
       currentDirection: this.direction,
+      patrolLockTimer: this.patrolLockTimer,
       state: this.state,
     };
   }
@@ -109,6 +112,9 @@ export class Ghost {
     if (this.isAtCenter()) {
       this._syncGridFromPixel();
 
+      const prevDirection = this.direction;
+      const lockExpired = this.patrolLockTimer <= 0;
+
       const infos = this.getInfos(map, pacman);
       this.state = safeCall(
         () => {
@@ -119,6 +125,10 @@ export class Ghost {
         () => 'patrol'
       );
       infos.state = this.state;
+
+      if (this.state !== 'patrol') {
+        this.patrolLockTimer = 0;
+      }
 
       const newDirection = safeCall(
         () => chooseDirection(infos, map),
@@ -132,7 +142,14 @@ export class Ghost {
         this.direction = null;
       } else {
         this.direction = newDirection;
+        if (this.state === 'patrol' && (prevDirection !== newDirection || lockExpired)) {
+          this.patrolLockTimer = PATROL_LOCK_DURATION;
+        }
       }
+    }
+
+    if (this.state === 'patrol' && this.patrolLockTimer > 0) {
+      this.patrolLockTimer = Math.max(0, this.patrolLockTimer - dt);
     }
 
     if (this.direction) {

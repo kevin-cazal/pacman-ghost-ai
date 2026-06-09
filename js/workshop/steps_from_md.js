@@ -1,11 +1,6 @@
 // NE PAS MODIFIER — charge les instructions depuis les fichiers markdown
 
-import {
-  loadText,
-  renderMarkdown,
-  parseFrontmatter,
-  splitSections,
-} from './markdown.js';
+import { loadText } from './markdown.js';
 
 const CONTENT = 'js/workshop/content';
 
@@ -15,7 +10,7 @@ export let ATELIER_META = {};
 async function loadAtelier(id) {
   const base = `${CONTENT}/atelier-${id}`;
   const meta = JSON.parse(await loadText(`${base}/meta.json`));
-  const markdown = await loadText(`${base}/${meta.workshop}`);
+  const markdown = await loadText(meta.workshop);
 
   return {
     meta: {
@@ -35,19 +30,5 @@ export async function loadWorkshopContent() {
   ATELIER_META = {
     1: a1.meta,
     2: a2.meta,
-  };
-}
-
-export async function loadAide() {
-  return renderMarkdown(await loadText(`${CONTENT}/aide.md`));
-}
-
-export async function loadUiHints() {
-  const text = await loadText(`${CONTENT}/ui-hints.md`);
-  const { body } = parseFrontmatter(text);
-  const sections = splitSections(body);
-  return {
-    code: sections['Code'] ? renderMarkdown(sections['Code']) : '',
-    game: sections['Jeu'] ? renderMarkdown(sections['Jeu']) : '',
   };
 }

@@ -33,6 +33,7 @@ export const SCORE = {
 
 export const SCARED_DURATION = 8;
 export const DEATH_RESTART_DELAY = 3;
+export const PATROL_LOCK_DURATION = 1.5;
 
 export const DIRECTIONS = {
   up: { x: 0, y: -1 },

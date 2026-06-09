@@ -115,7 +115,7 @@ export class Renderer {
     this.ctx.textAlign = 'left';
     this.ctx.fillText(`Score: ${score}`, 8, 18);
     this.ctx.textAlign = 'right';
-    this.ctx.fillText(`Pastilles: ${pillsLeft}`, this.canvas.width - 8, 18);
+    this.ctx.fillText(`Pac-gommes: ${pillsLeft}`, this.canvas.width - 8, 18);
 
     if (message) {
       this.ctx.textAlign = 'center';
