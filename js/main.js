@@ -146,7 +146,7 @@ async function boot() {
 
   ATELIER_MARKDOWN = stepsModule.ATELIER_MARKDOWN;
 
-  document.title = 'Mini Pac-Man — Atelier (infos à coder)';
+  document.title = 'Mini Pac-Man — Atelier';
 
   renderInstructions();
   setFocus('editor');
