@@ -1,4 +1,4 @@
-# Atelier 1 - Arbre de décision
+# Atelier 1 (Starter) - Arbre de décision
 
 **Bienvenue !** Tu vas programmer l'intelligence du fantôme de Pac-Man.
 
