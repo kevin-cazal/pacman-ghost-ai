@@ -1,5 +1,6 @@
 {
   "title": "Atelier 1 — Arbre de décision (infos à coder)",
   "functionName": "buildInfos + chooseDirection",
-  "workshop": "WORKSHOP_starter.md"
+  "workshop": "WORKSHOP_starter.md",
+  "contentVersion": "3"
 }

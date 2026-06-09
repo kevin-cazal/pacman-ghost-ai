@@ -10,7 +10,8 @@ export let ATELIER_META = {};
 async function loadAtelier(id) {
   const base = `${CONTENT}/atelier-${id}`;
   const meta = JSON.parse(await loadText(`${base}/meta.json`));
-  const markdown = await loadText(meta.workshop);
+  const version = meta.contentVersion ? `?v=${meta.contentVersion}` : '';
+  const markdown = await loadText(`${meta.workshop}${version}`);
 
   return {
     meta: {

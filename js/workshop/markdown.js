@@ -3,7 +3,7 @@
 import { marked } from '../../lib/marked/marked.esm.js';
 
 export async function loadText(url) {
-  const response = await fetch(url);
+  const response = await fetch(url, { cache: 'no-store' });
   if (!response.ok) {
     throw new Error(`Impossible de charger ${url}`);
   }
