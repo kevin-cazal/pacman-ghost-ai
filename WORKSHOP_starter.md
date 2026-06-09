@@ -84,7 +84,7 @@ Dans ton code, le jeu te donne déjà ces valeurs :
 - `map.isWall(x, y)` - `true` si la case `(x, y)` est un mur (case bleu), `false` sinon
 
 ### À toi de jouer
-Pas de code à écrire - lis bien cette érape. Quand c'est clair, passe à l'étape suivante.
+Pas de code à écrire - lis bien cette étape. Quand c'est clair, passe à l'étape suivante.
 
 
 ### Vérifie
