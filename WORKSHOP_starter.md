@@ -17,7 +17,7 @@
 | `'left' / 'right' / 'up' / 'down'` | Les 4 directions possibles (toujours entre apostrophes) |
 | `canGoLeft` | Tu le calcules : !map.isWall(ghost.gridX - 1, ghost.gridY) |
 | `distanceX` | Tu le calcules : pacman.gridX - ghost.gridX |
-| `totalDistance` | Tu le calcules : |distanceX| + |distanceY| - nombre de cases entre fantôme et Pac-Man |
+| `totalDistance` | Tu le calcules : abs(distanceX) + abs(distanceY) - nombre de cases entre fantôme et Pac-Man |
 | `return null` | « Je ne bouge pas » - à mettre à la fin si aucune règle ne s'applique |
 
 ---
@@ -77,6 +77,8 @@ La zone de jeu est une **grille de cases**. Chaque case a une coordonnée `(grid
 - `gridY` = numéro de **ligne** - 0 tout en haut, augmente vers le **bas**
 - La case en haut à gauche est `(0, 0)`
 
+![Origine](img/origin.png)
+
 Dans ton code, le jeu te donne déjà ces valeurs :
 
 - `ghost.gridX` / `ghost.gridY` - position du fantôme
@@ -102,7 +104,12 @@ Si le fantôme est en `(3, 2)` et Pac-Man en `(6, 2)`, qui est le plus à droite
 
 ### Concept
 
-Pour savoir si le fantôme peut aller à gauche, regarde la case à gauche (PLACEHOLDER ILLUSTRATION). Pas de mur, on peut y aller.
+Pour savoir si le fantôme peut aller à gauche, regarde la case à gauche. Pas de mur, on peut y aller.
+
+![Dectection Murs](img/canGo.png)
+
+![Directions](img/directions.png)
+
 
 **Ligne par ligne :**
 
@@ -182,6 +189,9 @@ Tu veux maintenant savoir où est Pac-Man par rapport au fantôme sur l'axe hori
 
 - si `distanceX` est positif, Pac-Man est à droite du fantôme
 - si `distanceX` est négatif, Pac-Man est à gauche du fantôme
+
+![DistanceX](img/distanceX.png)
+
 
 ### Où modifier
 Modifie `buildInfos` (ajoute `distanceX` aux propriétés du) **et** `chooseDirection` (modifie la règle de l'étape précédente).
