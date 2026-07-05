@@ -1,5 +1,6 @@
 node_modules/
 lib/monaco/
+lib/fengari/
 
 NOTES_ANIMATEUR.md
 Solutions.md

@@ -32,7 +32,7 @@ export function initEditor(host) {
       ['vs/editor/editor.main'],
       () => {
         const editor = monaco.editor.create(host, {
-          language: 'javascript',
+          language: 'lua',
           theme: 'vs-dark',
           automaticLayout: true,
           minimap: { enabled: false },

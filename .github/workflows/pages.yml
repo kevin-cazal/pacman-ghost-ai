@@ -30,6 +30,9 @@ jobs:
       - name: Install Monaco Editor
         run: ./scripts/setup-monaco.sh
 
+      - name: Install Fengari
+        run: ./scripts/setup-fengari.sh
+
       - name: Prepare static site
         run: |
           rm -rf node_modules
