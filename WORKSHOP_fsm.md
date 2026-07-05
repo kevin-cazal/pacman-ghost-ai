@@ -20,10 +20,10 @@
 | `'scared'` | Mode peur - Pac-Man a mangé une super pac-gomme, le fantôme fuit (bleu) |
 | `super pac-gomme` | Grande pac-gomme blanche dans les 4 coins de la carte - effraie le fantôme 8 secondes |
 | `game.scaredTimer` | Temps restant de la super pac-gomme (> 0 = peur active) |
-| `state` | Mode actuel du fantôme - tu le recopies dans `buildInfos` : `state: ghost.state` |
-| `currentDirection` | Dernière direction du fantôme - tu le recopies : `currentDirection: ghost.direction` |
-| `patrolLockTimer` | Temps restant (secondes) avant un nouveau choix aléatoire - tu le recopies : `patrolLockTimer: ghost.patrolLockTimer` |
-| `totalDistance` | Tu le calcules : `Math.abs(distanceX) + Math.abs(distanceY)` - nombre de cases entre fantôme et Pac-Man |
+| `state` | Mode actuel du fantôme - tu le recopies dans `buildInfos` : `state = ghost.state` |
+| `currentDirection` | Dernière direction du fantôme - tu le recopies : `currentDirection = ghost.direction` |
+| `patrolLockTimer` | Temps restant (secondes) avant un nouveau choix aléatoire - tu le recopies : `patrolLockTimer = ghost.patrolLockTimer` |
+| `totalDistance` | Tu le calcules : `math.abs(distanceX) + math.abs(distanceY)` — nombre de cases entre fantôme et Pac-Man |
 
 ---
 
@@ -52,14 +52,14 @@ Le fantôme se comporte encore comme à la fin de l'Atelier 1 - il poursuit Pac-
 
 Dans `buildInfos`, ajoute :
 
-```javascript
-state: ghost.state,
+```lua
+state = ghost.state,
 ```
 
 Dans `updateState`, laisse :
 
-```javascript
-return 'patrol';
+```lua
+return 'patrol'
 ```
 
 Ne modifie pas `chooseDirection`.
@@ -82,44 +82,42 @@ Quand Pac-Man est **loin**, le fantôme est en mode `'patrol'` : il **erre** san
 
 Pour éviter un mouvement saccadé (changement à chaque case), le fantôme **garde sa direction pendant un moment** grâce à `patrolLockTimer` :
 
-```javascript
-currentDirection: ghost.direction,
-patrolLockTimer: ghost.patrolLockTimer,
+```lua
+currentDirection = ghost.direction,
+patrolLockTimer = ghost.patrolLockTimer,
 ```
 
-`ghost.direction` vaut `'left'`, `'right'`, `'up'`, `'down'` ou `null` (immobile).  
+`ghost.direction` vaut `'left'`, `'right'`, `'up'`, `'down'` ou `nil` (immobile).
 `patrolLockTimer` compte les secondes restantes avant de pouvoir choisir une nouvelle direction au hasard.
 
 **Règles de patrouille :**
 
-1. Si `patrolLockTimer > 0` et `currentDirection` est libre: continue dans cette direction
-2. Sinon (timer fini ou mur devant): choisis une direction **au hasard** parmi les directions valides
+1. Si `patrolLockTimer > 0` et `currentDirection` est libre : continue dans cette direction
+2. Sinon (timer fini ou mur devant) : choisis une direction **au hasard** parmi les directions valides
 
-**Astuce: tirer un élément aléatoire dans une liste** :
+**Astuce : tirer un élément aléatoire dans une liste** :
 
-Tu choisis un dessert au hasard dans un menu. Tu commences avec une **liste vide** `[]`, tu n'y mets que les desserts **encore disponibles** `if (...) {desserts.push(...)}`, puis tu tires un **numéro au hasard** pour en sélectionner un (index **0**, **1**, **2**... selon la taille de la liste).
+Tu choisis un dessert au hasard dans un menu. Tu commences avec une **liste vide** `{}`, tu n'y mets que les desserts **encore disponibles** `if ... then table.insert(desserts, ...) end`, puis tu tires un **numéro au hasard** pour en sélectionner un (index **1**, **2**, **3**... selon la taille de la liste — en Lua, les tables commencent à **1**).
 
-```javascript
-const desserts = [];
-if (glaceDispo) desserts.push('glace');
-if (gateauDispo) desserts.push('gâteau');
-if (fruitDispo) desserts.push('fruit');
-if (crepeDispo) desserts.push('crêpe');
-const index = Math.floor(Math.random() * desserts.length);
-return desserts[index];
+```lua
+local desserts = {}
+if glaceDispo then table.insert(desserts, 'glace') end
+if gateauDispo then table.insert(desserts, 'gâteau') end
+if fruitDispo then table.insert(desserts, 'fruit') end
+if crepeDispo then table.insert(desserts, 'crêpe') end
+local index = math.random(1, #desserts)
+return desserts[index]
 ```
 
-Imaginons qu'il n'y ait plus de gâteaux : la liste vaut `['glace', 'fruit', 'crêpe']` - **3** desserts, donc des index **0**, **1** ou **2**.
+Imaginons qu'il n'y ait plus de gâteaux : la liste vaut `{'glace', 'fruit', 'crêpe'}` — **3** desserts, donc des index **1**, **2** ou **3**.
 
 **Comment l'index aléatoire est calculé :**
 
-1. `Math.random()` génère un nombre à virgule aléatoire **>= 0** et **< 1** (ex. `0.73`)
-2. `Math.random() * desserts.length` étend cette valeur sur la taille de la liste (ex. `0.73 * 3 = 2.19`)
-3. `Math.floor(...)` arrondit à l'entier inférieur (ex. `2`)
-4. `desserts[2]` renvoie le troisième élément : `'crêpe'`
+1. `math.random(1, n)` tire un entier aléatoire entre **1** et **n** inclus (ex. `2` pour une liste de 3 desserts)
+2. `desserts[2]` renvoie le deuxième élément : `'fruit'`
 
-Autre tirage possible : `0.12 * 3 = 0.36`, puis `Math.floor`, puis **0**, puis `'glace'`.  
-Si la liste est vide (`desserts.length === 0`), ne fais pas ce calcul - il n'y a rien à choisir.
+Autre tirage possible : `math.random(1, 3)` donne **1**, puis `'glace'`.
+Si la liste est vide (`#desserts == 0`), ne fais pas ce calcul — il n'y a rien à choisir.
 
 Adapte cette idée aux directions du fantôme.
 
@@ -131,15 +129,15 @@ Sans patrouille, le fantôme **poursuit toujours** Pac-Man (Atelier 1) même qua
 
 Dans `buildInfos`, ajoute :
 
-```javascript
-currentDirection: ghost.direction,
-patrolLockTimer: ghost.patrolLockTimer,
+```lua
+currentDirection = ghost.direction,
+patrolLockTimer = ghost.patrolLockTimer,
 ```
 
-Dans `chooseDirection`, ajoute **au début** (avant tes règles de poursuite) un bloc `if (infos.state === 'patrol')` :
+Dans `chooseDirection`, ajoute **au début** (avant tes règles de poursuite) un bloc `if infos.state == 'patrol' then` :
 
 1. Si `patrolLockTimer > 0`, continue `currentDirection` tant que la case devant est libre (même principe que quatre `if` avec `canGoLeft`, `canGoRight`, etc.)
-2. Sinon, choisi une direction aléatoire parmi celles possibles
+2. Sinon, choisis une direction aléatoire parmi celles possibles
 
 ### Vérifie
 
@@ -167,9 +165,9 @@ Sans le mode `follow`, le fantôme patrouille même quand tu t'approches.
 
 ### À toi de jouer
 
-1. `buildInfos` - ajoute une propriété pour la distance en cases entre fantôme et Pac-Man
-2. `updateState` - si Pac-Man est proche (<= 8 cases), `'follow'`, sinon `'patrol'`
-3. `chooseDirection` - enveloppe tout l'arbre de poursuite Atelier 1 dans un test sur `infos.state`
+1. `buildInfos` — ajoute une propriété pour la distance en cases entre fantôme et Pac-Man
+2. `updateState` — si Pac-Man est proche (<= 8 cases), `'follow'`, sinon `'patrol'`
+3. `chooseDirection` — enveloppe tout l'arbre de poursuite Atelier 1 dans un test sur `infos.state`
 
 ### Vérifie
 
@@ -190,25 +188,25 @@ Quand Pac-Man mange une **super pac-gomme** (grosse pac-gomme blanche), le fant�
 
 **Astuce (priorités)** : on teste d'abord l'urgence, puis le reste.
 
-```javascript
-if (urgence) return 'rouge';
-if (proche) return 'orange';
-return 'vert';
+```lua
+if urgence then return 'rouge' end
+if proche then return 'orange' end
+return 'vert'
 ```
 
 Adapte à `scared` > `follow` > `patrol`.
 
 ### Observe le jeu
 
-Après une super pac-gomme, le fantôme devient **bleu** mais patrouille ou poursuit encore - la fuite viendra à l'étape 5.
+Après une super pac-gomme, le fantôme devient **bleu** mais patrouille ou poursuit encore — la fuite viendra à l'étape 5.
 
 ### Astuce
 
-Les petites pac-gommes orange ne comptent pas - cherche les **grosses pac-gommes blanches** aux 4 coins.
+Les petites pac-gommes orange ne comptent pas — cherche les **grosses pac-gommes blanches** aux 4 coins.
 
 ### À toi de jouer
 
-1. `updateState` - 3 modes avec priorité : `scared` avant `follow` avant `patrol`
+1. `updateState` — 3 modes avec priorité : `scared` avant `follow` avant `patrol`
 2. Ne modifie pas `chooseDirection`
 
 ### Vérifie
@@ -228,7 +226,7 @@ Pourquoi tester `scared` avant `follow` dans `updateState` ?
 
 ### Concept
 
-En mode `'scared'`, le fantôme **fuit** Pac-Man - direction **opposée** à la poursuite.
+En mode `'scared'`, le fantôme **fuit** Pac-Man — direction **opposée** à la poursuite.
 
 ### Observe le jeu
 
@@ -270,4 +268,3 @@ Joue une partie complète et vérifie que ton programme se comporte correctement
 ### Réflexion
 
 Comment rendrais-tu la patrouille plus imprévisible sans ajouter un 4e mode ?
-

@@ -2,5 +2,5 @@
   "title": "Atelier 2 — Machine à états finis (infos à coder)",
   "functionName": "buildInfos + updateState + chooseDirection",
   "workshop": "WORKSHOP_fsm.md",
-  "contentVersion": "2"
+  "contentVersion": "3"
 }
