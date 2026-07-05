@@ -12,6 +12,9 @@ Ateliers pour programmer l'intelligence du fantôme de Pac-Man (code élève en 
 ```bash
 ./scripts/setup-monaco.sh
 ./scripts/setup-fengari.sh
+npm install
+npx playwright install chromium
+npm run test:all
 ```
 
 Puis servir le dossier avec un serveur HTTP statique (les modules ES et le chargement du template Lua nécessitent HTTP).

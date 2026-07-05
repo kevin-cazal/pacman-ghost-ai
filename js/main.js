@@ -19,6 +19,10 @@ let ATELIER_MARKDOWN = null;
 const canvas = document.getElementById('game');
 const game = new Game(canvas);
 
+if (new URLSearchParams(window.location.search).has('test')) {
+  window.__game = game;
+}
+
 game.onRuntimeError = (error) => {
   showError(formatRuntimeError(error, error.context));
   game.input.setEnabled(false);
